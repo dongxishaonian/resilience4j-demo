@@ -1,0 +1,29 @@
+spring:
+  application.name: resilience4j-demo
+  jackson.serialization.indent_output: true
+
+server:
+  port: 8080
+
+resilience4j.bulkhead:
+  configs:
+    default:
+      maxConcurrentCalls: 5
+      maxWaitDuration: 20ms
+  instances:
+    backendA:
+      baseConfig: default
+
+resilience4j.thread-pool-bulkhead:
+  configs:
+    default:
+      maxThreadPoolSize: 4
+      coreThreadPoolSize: 2
+      queueCapacity: 2
+  instances:
+    backendA:
+      baseConfig: default
+    backendB:
+      maxThreadPoolSize: 1
+      coreThreadPoolSize: 1
+      queueCapacity: 1
